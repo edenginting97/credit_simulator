@@ -11,4 +11,15 @@ public class Display {
                 'exit' to quit program data
                 """);
     }
+
+    public void printCalculationCommands() {
+        System.out.println("""
+                ===== List Commands =====
+                'next' to continue calculation
+                'save' to store current session and start new session
+                'list' to check all stored sessions
+                'back' to go to menu
+                'show' to list all commands
+                """);
+    }
 }

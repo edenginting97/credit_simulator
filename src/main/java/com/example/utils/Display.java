@@ -8,7 +8,7 @@ public class Display {
                 'show' to list all commands
                 'start' to begin calculation
                 'load' to calculate existing data
-                'exit' to quit program data
+                'exit' to quit the program
                 """);
     }
 

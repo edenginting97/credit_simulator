@@ -1,0 +1,54 @@
+name: workflow.yml
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build and test
+        run: mvn -B clean verify
+
+      - name: Upload executable JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: credit-simulator
+          path: target/credit_simulator-1.0-SNAPSHOT.jar
+
+  docker:
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: credit-simulator
+          path: target/
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/credit-simulator:latest

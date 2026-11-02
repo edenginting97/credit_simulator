@@ -1,0 +1,6 @@
+Jenis Kendaraan: Mobil
+Kondisi Kendaraan: Bekas
+Tahun Kendaraan: 5
+Jumlah Total Pinjaman: 100000000
+Tenor Pinjaman: 3
+Jumlah DP: 25000000

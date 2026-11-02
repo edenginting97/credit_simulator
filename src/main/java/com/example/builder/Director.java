@@ -12,11 +12,15 @@ public class Director {
     }
 
     public void calculateCredit(VehicleLoan loan) {
-        session.selectVehicle(loan.getVehicleType());
-        session.selectCondition(loan.getVehicleCondition());
-        session.setVehicleYear(loan.getVehicleYear());
-        session.setTotalLoan(loan.getTotalLoanAmount());
-        session.setLoanTenure(loan.getLoanTenure());
-        session.setDownPayment(loan.getDownPayment());
+        try {
+            session.selectVehicle(loan.getVehicleType());
+            session.selectCondition(loan.getVehicleCondition());
+            session.setVehicleYear(loan.getVehicleYear());
+            session.setTotalLoan(loan.getTotalLoanAmount());
+            session.setLoanTenure(loan.getLoanTenure());
+            session.setDownPayment(loan.getDownPayment());
+        } catch (IllegalArgumentException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 }

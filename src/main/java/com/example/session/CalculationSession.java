@@ -55,7 +55,11 @@ public class CalculationSession {
 
     public void setVehicleYear(int year) {
         if (this.calculator.isInvalidVehicleYear(year)) {
-            System.err.println("Vehicle year must be exactly 4 digits and new vehicles must be from the current year or the previous year");
+            if (this.vehicleLoan.getVehicleCondition().equalsIgnoreCase(BARU)) {
+                throw new IllegalArgumentException("Vehicle year must be exactly 4 digits and cannot be earlier than the previous year");
+            } else {
+                throw new IllegalArgumentException("Vehicle year must be exactly 4 digits");
+            }
         } else {
             this.vehicleLoan.setVehicleYear(year);
             this.installment.setState(CalculationState.INPUT_TOTAL_LOAN);
@@ -65,7 +69,7 @@ public class CalculationSession {
 
     public void setTotalLoan(BigDecimal amount) {
         if (this.calculator.exceedsMaximumTotalLoan(amount)) {
-            System.err.println("Total loan cannot be greater than 1 million");
+            throw new IllegalArgumentException("Total loan cannot be greater than 1 million");
         } else {
             this.vehicleLoan.setTotalLoanAmount(amount);
             this.installment.setState(CalculationState.INPUT_LOAN_TENURE);
@@ -75,7 +79,7 @@ public class CalculationSession {
 
     public void setLoanTenure(int year) {
         if (this.calculator.isLoanTenureOutOfRange(year)) {
-            System.err.println("Loan tenure must be between 1 and 6");
+            throw new IllegalArgumentException("Loan tenure must be between 1 and 6");
         } else {
             this.vehicleLoan.setLoanTenure(year);
             this.installment.setState(CalculationState.INPUT_DOWN_PAYMENT);
@@ -85,7 +89,11 @@ public class CalculationSession {
 
     public void setDownPayment(BigDecimal amount) {
         if (calculator.exceedsMinimumDownPayment(amount, vehicleLoan.getTotalLoanAmount())) {
-            System.err.println("Down payment cannot be lower than 35% for 'New Vehicle' and 25% for 'Old Vehicle'");
+            if (this.vehicleLoan.getVehicleCondition().equalsIgnoreCase(BARU)) {
+                throw new IllegalArgumentException("Down payment cannot be lower than 35%");
+            } else {
+                throw new IllegalArgumentException("Down payment cannot be lower than 25%");
+            }
         } else {
             vehicleLoan.setDownPayment(amount);
             System.out.println(calculator.calculateMonthlyInstallment(vehicleLoan));

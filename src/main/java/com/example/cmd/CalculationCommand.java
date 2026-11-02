@@ -56,45 +56,49 @@ public class CalculationCommand {
 
     private void calculateInstallment(CalculationSession session, Scanner scanner) {
         var state = session.getInstallment().getState() == null ? CalculationState.SELECT_VEHICLE : session.getInstallment().getState();
-        switch (state) {
-            case SELECT_CONDITION -> {
-                System.out.println("Input kendaraan Bekas|Baru");
-                var condition = scanner.nextLine().trim();
-                session.selectCondition(condition);
-            }
-            case INPUT_VEHICLE_YEAR -> {
-                System.out.println("Input tahun kendaraan");
-                var year = scanner.nextInt();
-                scanner.nextLine();
+        try {
+            switch (state) {
+                case SELECT_CONDITION -> {
+                    System.out.println("Input kendaraan Bekas|Baru");
+                    var condition = scanner.nextLine().trim();
+                    session.selectCondition(condition);
+                }
+                case INPUT_VEHICLE_YEAR -> {
+                    System.out.println("Input tahun kendaraan");
+                    var year = scanner.nextInt();
+                    scanner.nextLine();
 
-                session.setVehicleYear(year);
-            }
-            case INPUT_TOTAL_LOAN -> {
-                System.out.println("Input jumlah pinjaman total");
-                var amount = scanner.nextBigDecimal();
-                scanner.nextLine();
+                    session.setVehicleYear(year);
+                }
+                case INPUT_TOTAL_LOAN -> {
+                    System.out.println("Input jumlah pinjaman total");
+                    var amount = scanner.nextBigDecimal();
+                    scanner.nextLine();
 
-                session.setTotalLoan(amount);
-            }
-            case INPUT_LOAN_TENURE -> {
-                System.out.println("Input tenor pinjaman");
-                var year = scanner.nextInt();
-                scanner.nextLine();
+                    session.setTotalLoan(amount);
+                }
+                case INPUT_LOAN_TENURE -> {
+                    System.out.println("Input tenor pinjaman");
+                    var year = scanner.nextInt();
+                    scanner.nextLine();
 
-                session.setLoanTenure(year);
-            }
-            case INPUT_DOWN_PAYMENT -> {
-                System.out.println("Input jumlah DP");
-                var amount = scanner.nextBigDecimal();
-                scanner.nextLine();
+                    session.setLoanTenure(year);
+                }
+                case INPUT_DOWN_PAYMENT -> {
+                    System.out.println("Input jumlah DP");
+                    var amount = scanner.nextBigDecimal();
+                    scanner.nextLine();
 
-                session.setDownPayment(amount);
+                    session.setDownPayment(amount);
+                }
+                default -> {
+                    System.out.println("Input jenis kendaraan Motor|Mobil");
+                    var vehicle = scanner.nextLine().trim();
+                    session.selectVehicle(vehicle);
+                }
             }
-            default -> {
-                System.out.println("Input jenis kendaraan Motor|Mobil");
-                var vehicle = scanner.nextLine().trim();
-                session.selectVehicle(vehicle);
-            }
+        } catch (IllegalArgumentException ex) {
+            System.err.println(ex.getMessage());
         }
     }
 }

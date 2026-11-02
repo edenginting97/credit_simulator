@@ -177,4 +177,24 @@ public class CalculationSessionTest {
         assertEquals(dp, session.getVehicleLoan().getDownPayment());
         assertEquals(CalculationState.INPUT_LOAN_TENURE, session.getInstallment().getState());
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "Mobil, Baru, 100_000_000, 34_000_000",
+            "Mobil, Bekas, 100_000_000, 24_000_000",
+            "Motor, Baru, 100_000_000, 30_000_000",
+            "Motor, Bekas, 100_000_000, 22_000_000",
+    })
+    void shouldThrowIllegalArgumentException_whenExceededMinimumDownPayment(
+            String vehicle, String condition, int amount, int downPayment
+    ) {
+        var session = new CalculationSession();
+        var dp = new BigDecimal(downPayment);
+
+        session.selectVehicle(vehicle);
+        session.selectCondition(condition);
+        session.setTotalLoan(new BigDecimal(amount));
+
+        assertThrows(IllegalArgumentException.class, () -> session.setDownPayment(dp));
+    }
 }

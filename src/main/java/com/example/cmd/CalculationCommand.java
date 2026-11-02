@@ -90,6 +90,8 @@ public class CalculationCommand {
                     scanner.nextLine();
 
                     session.setDownPayment(amount);
+                    session.printResult();
+                    session.reset();
                 }
                 default -> {
                     System.out.println("Input jenis kendaraan Motor|Mobil");

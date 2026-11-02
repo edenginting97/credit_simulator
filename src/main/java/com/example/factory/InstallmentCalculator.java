@@ -15,7 +15,7 @@ abstract public class InstallmentCalculator {
     }
 
     public boolean exceedsMaximumTotalLoan(BigDecimal amount) {
-        BigDecimal loanLimit = new BigDecimal(1000000000);
+        BigDecimal loanLimit = new BigDecimal(1_000_000_000);
         return amount.compareTo(loanLimit) > 0;
     }
 

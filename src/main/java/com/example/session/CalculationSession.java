@@ -96,9 +96,11 @@ public class CalculationSession {
             }
         } else {
             vehicleLoan.setDownPayment(amount);
-            System.out.println(calculator.calculateMonthlyInstallment(vehicleLoan));
-            this.reset();
         }
+    }
+
+    public void printResult() {
+        System.out.println(calculator.calculateMonthlyInstallment(vehicleLoan));
     }
 
     public void reset() {
@@ -118,6 +120,10 @@ public class CalculationSession {
         this.vehicleLoan = installment.getVehicleLoan();
 
         restoreCalculator();
+    }
+
+    public VehicleLoan getVehicleLoan() {
+        return vehicleLoan;
     }
 
     private void restoreCalculator() {

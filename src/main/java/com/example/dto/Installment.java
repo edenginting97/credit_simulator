@@ -1,16 +1,18 @@
 package com.example.dto;
 
+import com.example.enums.CalculationState;
+
 public class Installment {
 
-    private String state;
+    private CalculationState state;
 
     private VehicleLoan vehicleLoan;
 
-    public String getState() {
+    public CalculationState getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(CalculationState state) {
         this.state = state;
     }
 

@@ -19,6 +19,7 @@ public class Display {
                 'save' to store current session and start new session
                 'list' to check all stored sessions
                 'back' to go to menu
+                'switch <index>' to fetch saved data
                 'show' to list all commands
                 """);
     }

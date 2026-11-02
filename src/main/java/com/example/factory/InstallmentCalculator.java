@@ -10,31 +10,17 @@ import java.util.List;
 
 abstract public class InstallmentCalculator {
 
-    public boolean validateVehicleYear(int num) {
+    public boolean isInvalidVehicleYear(int num) {
         return num > 9999;
     }
 
-    public boolean validateTotalLoan(BigDecimal amount) {
-        BigDecimal loanLimit = new BigDecimal(1000000);
+    public boolean exceedsMaximumTotalLoan(BigDecimal amount) {
+        BigDecimal loanLimit = new BigDecimal(1000000000);
         return amount.compareTo(loanLimit) > 0;
     }
 
-    public boolean validateLoanTenure(int year) {
+    public boolean isLoanTenureOutOfRange(int year) {
         return year < 1 || year > 6;
-    }
-
-    public BigDecimal getInterestRate(int year) {
-        BigDecimal baseRate = getBaseInterestRate();
-
-        BigDecimal yearlyIncrease = new BigDecimal("0.001")
-                .multiply(BigDecimal.valueOf(year - 1));
-
-        BigDecimal twoYearIncrease = new BigDecimal("0.004")
-                .multiply(BigDecimal.valueOf((year - 1) / 2));
-
-        return baseRate
-                .add(yearlyIncrease)
-                .add(twoYearIncrease);
     }
 
     public List<InstallmentResult> calculateMonthlyInstallment(VehicleLoan loan) {
@@ -75,7 +61,21 @@ abstract public class InstallmentCalculator {
         return results;
     }
 
-    public abstract boolean validateDownPayment(BigDecimal amount, BigDecimal totalLoan);
+    public abstract boolean exceedsMinimumDownPayment(BigDecimal amount, BigDecimal totalLoan);
 
     protected abstract BigDecimal getBaseInterestRate();
+
+    private BigDecimal getInterestRate(int year) {
+        BigDecimal baseRate = getBaseInterestRate();
+
+        BigDecimal yearlyIncrease = new BigDecimal("0.001")
+                .multiply(BigDecimal.valueOf(year - 1));
+
+        BigDecimal twoYearIncrease = new BigDecimal("0.004")
+                .multiply(BigDecimal.valueOf((year - 1) / 2));
+
+        return baseRate
+                .add(yearlyIncrease)
+                .add(twoYearIncrease);
+    }
 }

@@ -43,4 +43,21 @@ public class InstallmentResult {
     public void setYearlyInstallment(BigDecimal yearlyInstallment) {
         this.yearlyInstallment = yearlyInstallment;
     }
+
+    @Override
+    public String toString() {
+        return """
+                ===== Installment Result =====
+                Year                 : %d
+                Interest Rate        : %.2f%%
+                Monthly Installment : Rp%,.2f
+                Yearly Installment  : Rp%,.2f
+                =============================
+                """.formatted(
+                year,
+                interestRate.multiply(BigDecimal.valueOf(100)),
+                monthlyInstallment,
+                yearlyInstallment
+        );
+    }
 }

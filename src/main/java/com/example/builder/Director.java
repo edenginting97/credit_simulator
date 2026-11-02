@@ -19,6 +19,7 @@ public class Director {
             session.setTotalLoan(loan.getTotalLoanAmount());
             session.setLoanTenure(loan.getLoanTenure());
             session.setDownPayment(loan.getDownPayment());
+            session.printResult();
         } catch (IllegalArgumentException ex) {
             System.err.println(ex.getMessage());
         }

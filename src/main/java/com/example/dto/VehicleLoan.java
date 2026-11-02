@@ -1,6 +1,7 @@
 package com.example.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class VehicleLoan {
 
@@ -66,13 +67,28 @@ public class VehicleLoan {
 
     @Override
     public String toString() {
-        return "VehicleLoan{" +
-                "vehicleType='" + vehicleType + '\'' +
-                ", vehicleCondition='" + vehicleCondition + '\'' +
-                ", vehicleYear=" + vehicleYear +
-                ", totalLoanAmount=" + totalLoanAmount +
-                ", loanTenure=" + loanTenure +
-                ", downPayment=" + downPayment +
-                '}';
+        return """
+                ===== Vehicle Loan =====
+                Vehicle Type       : %s
+                Vehicle Condition  : %s
+                Vehicle Year       : %s
+                Total Loan Amount  : %s
+                Loan Tenure        : %s
+                Down Payment       : %s
+                ========================
+                """.formatted(
+                Objects.toString(vehicleType, "N/A"),
+                Objects.toString(vehicleCondition, "N/A"),
+                Objects.toString(vehicleYear, "N/A"),
+                formatCurrency(totalLoanAmount),
+                loanTenure == null ? "N/A" : loanTenure + " years",
+                formatCurrency(downPayment)
+        );
+    }
+
+    private String formatCurrency(BigDecimal amount) {
+        return amount == null
+                ? "N/A"
+                : "Rp%,.2f".formatted(amount);
     }
 }

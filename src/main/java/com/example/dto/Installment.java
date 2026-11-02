@@ -26,9 +26,12 @@ public class Installment {
 
     @Override
     public String toString() {
-        return "Installment{" +
-                "state='" + state + '\'' +
-                ", vehicleLoan=" + vehicleLoan +
-                '}';
+        return """
+                ===== Installment =====
+                State       : %s
+                Vehicle Loan:
+                %s
+                =======================
+                """.formatted(state, vehicleLoan);
     }
 }
